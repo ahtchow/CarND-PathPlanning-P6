@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "__functional_03": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "__bit_reference": "cpp",
+        "iostream": "cpp"
+    }
+}
