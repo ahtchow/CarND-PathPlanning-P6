@@ -1,6 +1,57 @@
 # CarND-Path-Planning-Project
-Self-Driving Car Engineer Nanodegree Program
-   
+Udacity Self-Driving Car Nanodegree - Path Planning Project
+
+
+![Driving](img/simulator.png)
+
+
+View the project run via my[youtube video!](https://www.youtube.com/watch?v=7JmwDAYAS3I&lc=UgzwGhSpuXGXNi0BRlR4AaABAg
+
+## Overview
+The following project explores the fundamentals of path planning in the context of robotic/autonomous vehicles. Namely this projects focuses on the topics of Search, Prediction and Trajectory Planning. In this project, an algorithm will output commands to an EGO vehicle to drive autonomously on a highway. Given raw sensor measurements as sensor fusion data of other cars (e.g velocity, position), the car must plan and drive through traffic efficiently while adhering to jerk and safety constraints. The path planner uses the uWebSockets WebSocket implementation to handle this communication.
+
+## Model
+### Localization and Prediction
+Using the data given from sensor fusion and map data, the model must first localize for other objects surrounding the EGO vehicle. This problem is simplified down by simply checking for other cars in the nearby lanes (Horizontal Distance). For each measurement, the nearby object's future position is calculated with respect to the time of decision making. The difference in vertical distances (between measurement and ego's position) are compared to the constraint SAFETY_DIST. If the difference is less than SAFETY_DIST then there is a car within the specific lane.
+
+The function in helpers.h demonstrates the task:
+```bash
+updateSurroundingStatus(car_in_front, car_left, car_right, lane, car_s, ref_vel, sensor_fusion, prev_size, SAFETY_DIST);
+
+```
+
+### Search
+The searching aspect of the path planner was fairly simple. First check if there is any vehicle in front, else stay in the current state. If there is a vehicle in front prioritize lane change left as oppose to right lane change. If neither options for lane change are possible simply follow behind the vehicle ahead safely.
+
+The function in helpers.h demonstrates the task:
+``` bash
+findBestLaneChange(lane, car_in_front, car_left, car_right);
+
+```
+### Trajectory Planning
+After the decision is made, there is a need to plan a safe trajectory for a lane change. Rather than fit a polynomial, a spline implementation was used instead. (Set a polynomials within a piecewise function) The spline implementation ([src/spline.h](./src/spline.h)) is referenced from [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/). Simply the idea of using a spline were to evenly space the next 50 points on the map smoothly. In addition, speed can incremented per given point to ensure jerk constraints and acceleration control.
+
+See line 92 to 202 in ([src/main.cpp](./src/main.cpp))
+
+
+## How To Run This Project
+``` bash
+# First, download and run the simulator (instructions in further sections)
+
+# Then, build the path planner:
+mkdir build
+cd build
+cmake ..
+# I have already performed the steps above, simply make the project
+make
+
+# From the build folder, run the build path planner:
+./path_planning
+```
+
+## Everything Else
+From here on, you can read the initial readme as it was given to us, with no changes made by me,
+
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).  
 
@@ -16,13 +67,6 @@ In this project your goal is to safely navigate around a virtual highway with ot
 Each waypoint in the list contains  [x,y,s,dx,dy] values. x and y are the waypoint's map coordinate position, the s value is the distance along the road to get to that waypoint in meters, the dx and dy values define the unit normal vector pointing outward of the highway loop.
 
 The highway's waypoints loop around so the frenet s value, distance along the road, goes from 0 to 6945.554.
-
-## Basic Build Instructions
-
-1. Clone this repo.
-2. Make a build directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./path_planning`.
 
 Here is the data provided from the Simulator to the C++ Program
 
@@ -43,13 +87,13 @@ Here is the data provided from the Simulator to the C++ Program
 #### Previous path data given to the Planner
 
 //Note: Return the previous list but with processed points removed, can be a nice tool to show how far along
-the path has processed since last time. 
+the path has processed since last time.
 
 ["previous_path_x"] The previous list of x points previously given to the simulator
 
 ["previous_path_y"] The previous list of y points previously given to the simulator
 
-#### Previous path's end s and d values 
+#### Previous path's end s and d values
 
 ["end_path_s"] The previous list's last point's frenet s value
 
@@ -57,7 +101,7 @@ the path has processed since last time.
 
 #### Sensor Fusion Data, a list of all other car's attributes on the same side of the road. (No Noise)
 
-["sensor_fusion"] A 2d vector of cars and then that car's [car's unique ID, car's x position in map coordinates, car's y position in map coordinates, car's x velocity in m/s, car's y velocity in m/s, car's s position in frenet coordinates, car's d position in frenet coordinates. 
+["sensor_fusion"] A 2d vector of cars and then that car's [car's unique ID, car's x position in map coordinates, car's y position in map coordinates, car's x velocity in m/s, car's y velocity in m/s, car's s position in frenet coordinates, car's d position in frenet coordinates.
 
 ## Details
 
@@ -87,7 +131,7 @@ A really helpful resource for doing this project and creating smooth trajectorie
   * Run either `install-mac.sh` or `install-ubuntu.sh`.
   * If you install from source, checkout to commit `e94b6e1`, i.e.
     ```
-    git clone https://github.com/uWebSockets/uWebSockets 
+    git clone https://github.com/uWebSockets/uWebSockets
     cd uWebSockets
     git checkout e94b6e1
     ```
@@ -142,4 +186,3 @@ still be compilable with cmake and make./
 
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
