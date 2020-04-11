@@ -29,7 +29,7 @@ findBestLaneChange(lane, car_in_front, car_left, car_right);
 
 ```
 ### Trajectory Planning
-After the decision is made, there is a need to plan a safe trajectory for a lane change. Rather than fit a polynomial, a spline implementation was used instead. (Set of polynomials within a piecewise function) The spline implementation ([src/spline.h](./src/spline.h)) is referenced from [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/). Simply the idea of using a spline were to evenly space the next 50 points on the map smoothly. In addition, speed can incremented per given point to ensure jerk constraints and acceleration control.
+After the decision is made, there is a need to plan a safe trajectory for a lane change. Rather than fit a polynomial, a spline implementation was used instead. (Set of polynomials within a piecewise function) The spline implementation ([src/spline.h](./src/spline.h)) is referenced from [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/). Simply put, the idea is to smoothly fit a spline for the next 50 points on the map. In addition, speed can incremented per given point to ensure jerk constraints and acceleration control.
 
 See line 92 to 202 in ([src/main.cpp](./src/main.cpp))
 
