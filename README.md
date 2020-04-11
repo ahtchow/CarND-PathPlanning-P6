@@ -5,7 +5,7 @@ Udacity Self-Driving Car Nanodegree - Path Planning Project
 ![Driving](img/simulator.png)
 
 
-View the project run via my[youtube video!](https://www.youtube.com/watch?v=7JmwDAYAS3I&lc=UgzwGhSpuXGXNi0BRlR4AaABAg
+View the project run via my [youtube video!](https://www.youtube.com/watch?v=7JmwDAYAS3I&lc=UgzwGhSpuXGXNi0BRlR4AaABAg)
 
 ## Overview
 The following project explores the fundamentals of path planning in the context of robotic/autonomous vehicles. Namely this projects focuses on the topics of Search, Prediction and Trajectory Planning. In this project, an algorithm will output commands to an EGO vehicle to drive autonomously on a highway. Given raw sensor measurements as sensor fusion data of other cars (e.g velocity, position), the car must plan and drive through traffic efficiently while adhering to jerk and safety constraints. The path planner uses the uWebSockets WebSocket implementation to handle this communication.
@@ -29,7 +29,7 @@ findBestLaneChange(lane, car_in_front, car_left, car_right);
 
 ```
 ### Trajectory Planning
-After the decision is made, there is a need to plan a safe trajectory for a lane change. Rather than fit a polynomial, a spline implementation was used instead. (Set a polynomials within a piecewise function) The spline implementation ([src/spline.h](./src/spline.h)) is referenced from [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/). Simply the idea of using a spline were to evenly space the next 50 points on the map smoothly. In addition, speed can incremented per given point to ensure jerk constraints and acceleration control.
+After the decision is made, there is a need to plan a safe trajectory for a lane change. Rather than fit a polynomial, a spline implementation was used instead. (Set of polynomials within a piecewise function) The spline implementation ([src/spline.h](./src/spline.h)) is referenced from [Cubic Spline interpolation implementation](http://kluge.in-chemnitz.de/opensource/spline/). Simply the idea of using a spline were to evenly space the next 50 points on the map smoothly. In addition, speed can incremented per given point to ensure jerk constraints and acceleration control.
 
 See line 92 to 202 in ([src/main.cpp](./src/main.cpp))
 
